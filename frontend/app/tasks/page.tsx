@@ -509,6 +509,21 @@ export default function TasksPage() {
             </div>
           )}
         </div>
+
+        {/* Delete Confirmation Modal */}
+        <Modal
+          isOpen={deleteModalOpen}
+          onClose={closeDeleteModal}
+          title="Delete Task"
+          variant="destructive"
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          onConfirm={confirmDelete}
+        >
+          <p className="text-zinc-600 dark:text-zinc-400">
+            Are you sure you want to delete this task? This action cannot be undone.
+          </p>
+        </Modal>
       </div>
     </div>
   );
