@@ -9,6 +9,7 @@ import { Alert } from '../components/feedback/Alert';
 
 export default function SignupPage() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,6 +20,11 @@ export default function SignupPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (!email || !email.includes('@')) {
+      setError('Please enter a valid email address');
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
@@ -33,7 +39,7 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      const success = await signup(username, password);
+      const success = await signup(username, email, password);
       if (success) {
         router.push('/dashboard');
       } else {
@@ -73,6 +79,17 @@ export default function SignupPage() {
             placeholder="Choose a username"
             disabled={loading}
             autoComplete="username"
+          />
+
+          <Input
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="Enter your email address"
+            disabled={loading}
+            autoComplete="email"
           />
 
           <Input
